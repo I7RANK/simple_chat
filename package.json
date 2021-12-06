@@ -1,0 +1,23 @@
+{
+  "name": "socket-io",
+  "version": "1.0.0",
+  "description": "\"Sokets.io get started\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/I7RANK/soket_io.git"
+  },
+  "author": "I7RANK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/I7RANK/soket_io/issues"
+  },
+  "homepage": "https://github.com/I7RANK/soket_io#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.4.0"
+  }
+}
