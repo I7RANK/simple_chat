@@ -12,8 +12,18 @@ form.addEventListener('submit', function (e) {
 });
 
 socket.on('chat message', function (msg) {
-  var item = document.createElement('li');
-  item.textContent = msg;
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+  const chatBox = document.querySelector('.chat-box');
+  var li = document.createElement('li');
+  var div = document.createElement('div');
+  var span = document.createElement('span');
+
+  li.setAttribute('class', 'message-box');
+  div.setAttribute('class', 'our-message me-message');
+
+  li.appendChild(div);
+  div.appendChild(span);
+
+  span.textContent = msg;
+  messages.appendChild(li);
+  chatBox.scrollTo(0, chatBox.scrollHeight);
 });
