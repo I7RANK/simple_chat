@@ -1,24 +1,19 @@
-var socket = io();
+const socket = io();
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
-  }
-});
-
-socket.on('chat message', function (msg) {
+function insertMessageBox(msg, type) {
   const chatBox = document.querySelector('.chat-box');
-  var li = document.createElement('li');
-  var div = document.createElement('div');
-  var span = document.createElement('span');
+  const li = document.createElement('li');
+  const div = document.createElement('div');
+  const span = document.createElement('span');
+  let messagetype = 'me-message';
+
+  if (type === 'your') messagetype = 'your-message';
 
   li.setAttribute('class', 'message-box');
-  div.setAttribute('class', 'our-message me-message');
+  div.setAttribute('class', `our-message ${messagetype}`);
 
   li.appendChild(div);
   div.appendChild(span);
@@ -26,4 +21,23 @@ socket.on('chat message', function (msg) {
   span.textContent = msg;
   messages.appendChild(li);
   chatBox.scrollTo(0, chatBox.scrollHeight);
+}
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (input.value) {
+    insertMessageBox(input.value);
+    socket.emit('chat message', { id: socket.id, msg: input.value });
+    input.value = '';
+  }
 });
+
+socket.on("connect", () => {
+  console.log("I'm connected");
+  console.log(socket.id);
+});
+
+socket.on('chat message', function (res) {
+  if (res.id !== socket.id) insertMessageBox(res.msg, 'your');
+});
+
