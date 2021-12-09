@@ -65,8 +65,18 @@ main {
   box-sizing: border-box;
   margin: 1rem;
   padding: 0.5rem 1rem;
-  border-radius: 200px;
-  max-width: 85vw;
+  border-radius: 15px;
+  max-width: 65%;
+  min-width: 10rem;
+}
+
+.message-user-name {
+  font-size: 8pt;
+}
+
+.message-text {
+  margin: 0;
+  word-break: break-word;
 }
 
 .me-message {

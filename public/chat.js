@@ -1,12 +1,19 @@
+let myName = '';
+
+while (myName === '') {
+  myName = window.prompt('Say me your name*');
+}
+
 const socket = io();
 
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 
-function insertMessageBox(msg, type) {
+function insertMessageBox(msg, type, userName) {
   const chatBox = document.querySelector('.chat-box');
   const li = document.createElement('li');
   const div = document.createElement('div');
+  const p = document.createElement('p');
   const span = document.createElement('span');
   let messagetype = 'me-message';
 
@@ -14,11 +21,15 @@ function insertMessageBox(msg, type) {
 
   li.setAttribute('class', 'message-box');
   div.setAttribute('class', `our-message ${messagetype}`);
+  span.setAttribute('class', 'message-user-name');
+  p.setAttribute('class', 'message-text');
 
   li.appendChild(div);
   div.appendChild(span);
+  div.appendChild(p);
 
-  span.textContent = msg;
+  span.textContent = userName;
+  p.textContent = msg;
   messages.appendChild(li);
   chatBox.scrollTo(0, chatBox.scrollHeight);
 }
@@ -26,8 +37,15 @@ function insertMessageBox(msg, type) {
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   if (input.value) {
-    insertMessageBox(input.value);
-    socket.emit('chat message', { id: socket.id, msg: input.value });
+    const obj = {
+      id: socket.id,
+      userName: myName,
+      date: new Date(),
+      msg: input.value
+    };
+
+    insertMessageBox(input.value, '', myName);
+    socket.emit('chat message', obj);
     input.value = '';
   }
 });
@@ -38,6 +56,6 @@ socket.on("connect", () => {
 });
 
 socket.on('chat message', function (res) {
-  if (res.id !== socket.id) insertMessageBox(res.msg, 'your');
+  if (res.id !== socket.id) insertMessageBox(res.msg, 'your', res.userName);
 });
 
