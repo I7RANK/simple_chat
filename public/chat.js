@@ -58,4 +58,3 @@ socket.on("connect", () => {
 socket.on('chat message', function (res) {
   if (res.id !== socket.id) insertMessageBox(res.msg, 'your', res.userName);
 });
-
