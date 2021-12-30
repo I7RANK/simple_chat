@@ -8,7 +8,7 @@ const io = new Server(server);
 app.use('/public', express.static("public"));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 io.on('connection', (socket) => {
@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', (client) => {
-    console.log(`message: ${client.msg}`);
+    console.log(`${client.userName}: ${client.msg}`);
     io.emit('chat message', client);
   });
 });
