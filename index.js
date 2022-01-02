@@ -5,10 +5,10 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-app.use('/public', express.static("public"));
+app.use('/maps', express.static("maps"));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/maps/index.html');
 });
 
 io.on('connection', (socket) => {
